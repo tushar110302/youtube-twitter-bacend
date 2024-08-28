@@ -104,7 +104,7 @@ const loginUser = async(req,res, next) => {
 
 const logOutUser = async (req, res, next) => {
     try {
-        await User.findByIdAndUpdate(req.user._id, {$set: {refreshToken: null}});
+        await User.findByIdAndUpdate(req.user._id, {$set: {refreshToken: ""}});
 
         const options = {
             httpOnly: true,
