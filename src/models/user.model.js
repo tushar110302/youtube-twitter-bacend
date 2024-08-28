@@ -48,7 +48,9 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();   // If password field is not modified return here itself
+    if(!this.isModified("password")) {
+        return next(); 
+      }  // If password field is not modified return here itself
 
     this.password = await bcrypt.hash(this.password, 10);
     next();
@@ -77,7 +79,7 @@ userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
-        }, process.env.REFRESH_TOKEN,
+        }, process.env.REFRESH_TOKEN_SECRET,
         {
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }

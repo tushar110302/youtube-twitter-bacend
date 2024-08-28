@@ -18,4 +18,8 @@ import userRouter from "./routes/user.route.js";
 
 app.use("/api/users", userRouter);
 
+app.use((err, req, res, next) => {
+    res.status(err.statusCode).json(err);
+});
+
 export { app };
