@@ -258,6 +258,7 @@ const updateCoverImage = async (req, res, next) => {
 const getUserChannelProfile = async (req, res, next) => {
     try {
         const {username} = req.params;
+        
         if(!username?.trim()){
             throw new ApiError(400, "Username is required");
         }
