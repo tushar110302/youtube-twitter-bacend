@@ -44,14 +44,14 @@ const toggleSubscription = async (req, res, next) => {
 // controller to return subscriber list of a channel
 const getUserChannelSubscribers = async (req, res, next) => {
     try {
-        const {channelId} = req.params
-        if(!channelId || !isValidObjectId(channelId)){
+        const {subscriberId} = req.params
+        if(!subscriberId || !isValidObjectId(subscriberId)){
             throw new ApiError(400, "Invalid channel");
         }
 
         const subs = await Subscription.aggregate([
             {
-                $match: { channel: new mongoose.Types.ObjectId(channelId) }
+                $match: { channel: new mongoose.Types.ObjectId(subscriberId) }
             },
             {
                 $lookup: {
@@ -90,14 +90,14 @@ const getUserChannelSubscribers = async (req, res, next) => {
 // controller to return channel list to which user has subscribed
 const getSubscribedChannels = async (req, res, next) => {
     try {
-        const { subscriberId } = req.params
-        if(!subscriberId || !isValidObjectId(subscriberId)){
+        const { channelId } = req.params
+        if(!channelId || !isValidObjectId(channelId)){
             throw new ApiError(400, "Invalid Subscriber ");
         }
     
         const channelList = await Subscription.aggregate([
             {
-                $match: new mongoose.Types.ObjectId(subscriberId)
+                $match: new mongoose.Types.ObjectId(channelId)
             },
             {
                 $lookup: {

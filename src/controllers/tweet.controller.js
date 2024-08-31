@@ -31,7 +31,7 @@ const createTweet =  async (req, res, next) => {
 const getUserTweets =  async (req, res) => {
     // TODO: get user tweets
     try {
-        const userId = req.user?._id;
+        const {userId} = req.params;
 
         const userTweets = await Tweet.find({owner: userId});
         if(!userTweets){
